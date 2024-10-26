@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit();
+}
 $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
     die("Problemas con la conexión");
 if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {

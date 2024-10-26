@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit();
+}
 if (isset($_POST['boton'])) {
     $botonPresionado = $_POST['boton'];
     if ($botonPresionado != Null) {

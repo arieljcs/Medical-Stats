@@ -54,7 +54,7 @@ if (isset($_SESSION['error'])) {
     </nav>
     <br>
     <div class="login-container">
-        <h1>Ingreso!</h1>
+        <h1>Ingreso</h1>
         <form action="login.php" method="POST">
             <label for="username">Usuario</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>

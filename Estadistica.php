@@ -1,6 +1,12 @@
 <?php
 //Inicia sesión de usuario
 session_start();
+
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit();
+}
 //Inicio la conexión
 $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
     die("Problemas con la conexión");
