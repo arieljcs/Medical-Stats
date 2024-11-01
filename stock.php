@@ -6,13 +6,14 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
 }
-
+//Crear conexión
 $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
     die("Problemas con la conexión");
-
+//Obtener los últimos 5 registros de la tabla de Stock
     $registros = mysqli_query($conexion, "select * from stock  order by id DESC LIMIT 5;") or
     die("Problemas en el select:" . mysqli_error($conexion));
 ?>
+<!-- Armar HTML -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -37,7 +38,7 @@ $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
         <h1>Control de Stock</h1>
         <div class="table-container">
         <table>
-            <thead>
+            <thead> <!--Cabecera de la tabla -->
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
@@ -48,6 +49,7 @@ $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
             </thead>
             <tbody>
     <?php
+    //Armar cuerpo de la tabla con los últimos 5 registros obtenidos
     while ($reg = mysqli_fetch_array($registros)) {
         $id = $reg['id'];
         echo "<tr>";
@@ -55,6 +57,7 @@ $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
         echo "<td>" . $reg['nombre'] . "</td>";
         echo "<td>" . $reg['cantidad'] . "</td>";
         echo "<td>" . $reg['vencimiento'] . "</td>";
+        //Crear botones para sumar y restar
         echo "<td>
                 <form action='actualizar_stock.php' method='POST'>
                     <button class='btn-secondary_stock' name='accion' value='restar_$id'>-</button>
