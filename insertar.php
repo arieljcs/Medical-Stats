@@ -6,9 +6,13 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
 }
+// Crear conexión
 $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
     die("Problemas con la conexión");
+
+    //Si el campo ID NO esta vacío, se esta actualizando un registro
 if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+    //Actualizar registro
     mysqli_query($conexion, "update pacientes
                            set numero_quirofano='$_REQUEST[numero_quirofano]',
                            edad= '$_REQUEST[edad]',
@@ -26,6 +30,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
                            where id='$_REQUEST[id]'") 
 or die("Problemas en el select" . mysqli_error($conexion));
 } else {
+    //Si el campo ID esta vacío, se esta creando un registro nuevo
     mysqli_query($conexion, "insert into pacientes(fecha,
         numero_quirofano,
         edad,
