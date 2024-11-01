@@ -6,12 +6,15 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
 }
+// Crear conexión
 $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
     die("Problemas con la conexión");
 
 // Validar que los campos requeridos existan y no estén vacíos
-if (isset($_POST['nombre']) && isset($_POST['vencimiento']) && isset($_POST['cantidad']) &&
-    !empty($_POST['nombre']) && !empty($_POST['vencimiento']) && !empty($_POST['cantidad'])) {
+if (
+    isset($_POST['nombre']) && isset($_POST['vencimiento']) && isset($_POST['cantidad']) &&
+    !empty($_POST['nombre']) && !empty($_POST['vencimiento']) && !empty($_POST['cantidad'])
+) {
 
     $nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
     $vencimiento = mysqli_real_escape_string($conexion, $_POST['vencimiento']);
@@ -20,10 +23,10 @@ if (isset($_POST['nombre']) && isset($_POST['vencimiento']) && isset($_POST['can
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         // Actualizar registro existente
         $id = intval($_POST['id']); // Asegurar que el ID sea un entero
-
+        //Preparar el código SQL que se va a ejecutar 
         $stmt = $conexion->prepare("UPDATE stock SET nombre = ?, vencimiento = ?, cantidad = ? WHERE id = ?");
         $stmt->bind_param("ssii", $nombre, $vencimiento, $cantidad, $id);
-
+        //Actualiza el registro
         if ($stmt->execute()) {
             echo "Registro actualizado correctamente.";
         } else {
@@ -35,7 +38,7 @@ if (isset($_POST['nombre']) && isset($_POST['vencimiento']) && isset($_POST['can
         // Insertar un nuevo registro
         $stmt = $conexion->prepare("INSERT INTO stock (nombre, vencimiento, cantidad) VALUES (?, ?, ?)");
         $stmt->bind_param("ssi", $nombre, $vencimiento, $cantidad);
-
+        //Crea el registro
         if ($stmt->execute()) {
             echo "Registro insertado correctamente.";
         } else {
@@ -44,7 +47,6 @@ if (isset($_POST['nombre']) && isset($_POST['vencimiento']) && isset($_POST['can
 
         $stmt->close();
     }
-
 } else {
     die("Faltan datos requeridos en el formulario.");
 }
@@ -55,5 +57,3 @@ mysqli_close($conexion);
 // Redirigir a la página de stock después de la operación
 header("Location: stock.php");
 exit;
-?>
-
