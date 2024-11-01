@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username']) && isset($
     //Si ya se intentó loguear
     $user = $_POST['username'];
     $pass = $_POST['password'];
-    //Verificar que el usuario y contraseña no estnén vacíos
+    //Verificar que el usuario y contraseña no estén vacíos
     if (empty($user) || empty($pass)) {
         $_SESSION['error'] = "Usuario o contraseña no pueden estar vacíos.";
         header("Location: login.php");
