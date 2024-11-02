@@ -31,7 +31,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 or die("Problemas en el select" . mysqli_error($conexion));
 } else {
     //Si el campo ID esta vacío, se esta creando un registro nuevo
-    mysqli_query($conexion, "insert into pacientes(fecha,
+    mysqli_query($conexion, "insert into pacientes(
         numero_quirofano,
         edad,
         dni,
@@ -45,7 +45,7 @@ or die("Problemas en el select" . mysqli_error($conexion));
         instrumentador,
         tipo_anestesia,
         urgencia) 
-values('$_REQUEST[fecha]',
+values(
        '$_REQUEST[numero_quirofano]',
        '$_REQUEST[edad]',
        '$_REQUEST[dni]',
