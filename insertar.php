@@ -6,12 +6,20 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
 }
+
+// Crear conexión
 $conexion = mysqli_connect("localhost", "root", "", "medical_stats") or
     die("Problemas con la conexión");
+
+// Verificar el valor del checkbox de urgencia
+$urgencia = isset($_REQUEST['urgencia']) ? 1 : 0;
+
+// Si el campo ID NO está vacío, se está actualizando un registro
 if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
-    mysqli_query($conexion, "update pacientes
-                           set numero_quirofano='$_REQUEST[numero_quirofano]',
-                           edad= '$_REQUEST[edad]',
+    // Actualizar registro
+    mysqli_query($conexion, "UPDATE pacientes
+                           SET numero_quirofano='$_REQUEST[numero_quirofano]',
+                           edad='$_REQUEST[edad]',
                            dni='$_REQUEST[dni]',
                            Localidad='$_REQUEST[Localidad]',
                            nombre='$_REQUEST[nombre]', 
@@ -22,11 +30,12 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
                            anestesista='$_REQUEST[anestesista]',
                            instrumentador='$_REQUEST[instrumentador]',
                            tipo_anestesia='$_REQUEST[tipo_anestesia]',
-                           urgencia='$_REQUEST[urgencia]'
-                           where id='$_REQUEST[id]'") 
-or die("Problemas en el select" . mysqli_error($conexion));
+                           urgencia='$urgencia'
+                           WHERE id='$_REQUEST[id]'") 
+    or die("Problemas en el select" . mysqli_error($conexion));
 } else {
-    mysqli_query($conexion, "insert into pacientes(fecha,
+    // Si el campo ID está vacío, se está creando un registro nuevo
+    mysqli_query($conexion, "INSERT INTO pacientes(
         numero_quirofano,
         edad,
         dni,
@@ -40,7 +49,7 @@ or die("Problemas en el select" . mysqli_error($conexion));
         instrumentador,
         tipo_anestesia,
         urgencia) 
-values('$_REQUEST[fecha]',
+VALUES(
        '$_REQUEST[numero_quirofano]',
        '$_REQUEST[edad]',
        '$_REQUEST[dni]',
@@ -53,7 +62,7 @@ values('$_REQUEST[fecha]',
        '$_REQUEST[anestesista]',
        '$_REQUEST[instrumentador]',
        '$_REQUEST[tipo_anestesia]',
-       '$_REQUEST[urgencia]')") or die("Problemas en el select" . mysqli_error($conexion));
+       '$urgencia')") or die("Problemas en el select" . mysqli_error($conexion));
 }
 
 mysqli_close($conexion);
