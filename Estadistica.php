@@ -113,7 +113,7 @@ mysqli_close($conexion);
     <nav>
         <ul>
             <li><a href="pagina.php">Inicio</a></li>
-            <li><a href="control.php">Control de Stock</a></li>
+            <li><a href="stock.php">Control de Stock</a></li>
             <li><a href="pagina.php"><img src="LogoB.png" alt="Logo" class="logo"></a></li>
             <li><a href="estadistica.php">Estadística</a></li>
             <li><a href="salir.php"><img src='CerrarSesion.png' width='35' height='35' alt='CerrarSesion'></a></li>
